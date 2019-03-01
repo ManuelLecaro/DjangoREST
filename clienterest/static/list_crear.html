@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<html lang="es">
+<head>
+	<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+	<meta charset="UTF-8">
+	<title>{% block title %}Peliculas{% endblock %}</title>
+</head>
+<body>
+	<div class="container">
+    <h1>New Rating</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+		{% if rating  %}
+		<select name="movie">
+		{% for options in rating.pelicula%}
+		<option value={{options.id}}>{{ options.titulo }}</option>
+		{% endfor %}
+		</select>
+		<select name="autor">
+		{% for options in rating.persona%}
+		<option value={{options.id}}>{{ options.nombre }}</option>
+		{% endfor %}
+		</select>
+		<input name ="cali" type="number" min="1" max="5" />
+        <button type="submit" class="save btn btn-default">Guardar</button>
+		{% endif %}
+    </form>
+	</div>
+
+	
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	
+
+</body>
+</html>
+

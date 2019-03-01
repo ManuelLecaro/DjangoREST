@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<title>{% block title %}Peliculas{% endblock %}</title>
+</head>
+<body>
+	<div class="container">
+	
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td>#</td>
+				<td>Usuario ID </td>
+				<td>Pelicula ID </td>
+				<td>Calificacion </td>
+				<td>Editar</td>
+				<td>Eliminar</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% if peliculas %}
+			{% for a in peliculas %}
+			<tr>
+				<td>{{ a.id }}</td>
+				<td>{{ a.pelicula }}</td>
+				<td>{{ a.persona }}</td>
+				<td>{{ a.cali }}</td>
+				<td><a class="btn btn-primary" href="{% url 'rating_editar' a.id %}">Editar</a></td>
+				<td><a class="btn btn-primary" href="{% url 'rating_eliminar' a.id %}">Eliminar</a></td>
+			</tr>
+			{% endfor %}
+			{% else %}
+			
+			<h1>No hay registros de usuario</h1>
+		
+			{% endif %}
+		</tbody>
+	</table>
+		<a class="btn btn-primary" href="{% url 'rating_crear' %}">Registrar Nuevo</a>
+	</div>
+
+	
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	
+
+</body>
+</html>
+

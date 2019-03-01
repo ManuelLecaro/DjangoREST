@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<meta charset="UTF-8">
+	<title>{% block title %}Peliculas{% endblock %}</title>
+</head>
+<body>
+<nav class="navbar navbar-toggleable-md navbar-light fixed-top bg-faded" style="background-color: mediumseagreen">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+        </ul>
+        {% if request.user.get_username %}
+            <a title="Permission as: {{ request.user.groups.all.0 }}" class="navbar-brand"
+               style="color:white;">Welcome, {{ request.user.get_username }}</a>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+            <!-- <form class="form-inline my-2 my-lg-0">
+                csrf_token
+                <a href="#" style="color: white" class="btn btn-danger my-2 my-sm-0" role="button" data-toggle="modal"
+                   data-target="#support-modal">Tickets</a>
+            </form> &nbsp -->
+
+            <form action="{% url 'logout' %}" method="post" class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        {% else %}
+            <form class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+                <a style="color:white" href="#" class="btn btn-primary my-2 my-sm-0" role="button" data-toggle="modal"
+                   data-target="#login-modal">Login</a>
+            </form>
+        {% endif %}
+    </div>
+
+</nav>
+
+	<div class="container">
+	{% if request.user.is_authenticated %}
+    <h1>Informacion de Peliculas</h1>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<td>#</td>
+				<td>Titulo</td>
+				<td>Director</td>				
+				<td>Reparto</td>
+				<td>Plan</td>
+                <td>Calificacion Promedio</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% if peliculas %}
+			
+			<tr>
+				<td>{{ peliculas.id }}</td>
+				<td>{{ peliculas.titulo }}</td>
+				<td>{{ peliculas.director }}</td>
+				<td>{{ peliculas.reparto }}</td>
+				<td>{{ peliculas.plan_id }}</td>
+                {% if promedio %}
+				<td>{{ promedio.calif__avg}}</td>
+                {% endif %}
+			</tr>
+
+			{% else %}
+			
+			<h1>No hay registros de peliculas</h1>
+		
+			{% endif %}
+		
+		</tbody>
+	</table>
+		{% else %}
+		<h1>No esta con sesion abierta, entre con su usuario antes</h1>
+		{% endif %}
+	</div>
+	
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	
+
+</body>
+</html>

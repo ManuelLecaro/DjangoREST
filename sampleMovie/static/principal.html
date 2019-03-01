@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<meta charset="UTF-8">
+	<title>{% block title %}Bienvenido{% endblock %}</title>
+</head>
+<body>
+	<div class="container">
+        <a class="btn btn-primary" href="{% url 'rating_user' %}">Informacion Usuario</a>
+	</div>
+	
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	
+
+</body>
+</html>
+
